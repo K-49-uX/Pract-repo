@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 // ✅ Use relative path (since backend serves frontend)
-const baseUrl = '/api/notes'
+const baseUrl = import.meta.env === 'development' 
+? 'http://localhost:3001/api/notes' 
+: '/api/notes'
 
 // GET all notes
 const getAll = () => {
