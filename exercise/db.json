@@ -1,0 +1,44 @@
+{
+  "notes": [
+    {
+      "id": "1",
+      "content": "HTML is easy",
+      "important": false
+    },
+    {
+      "id": "2",
+      "content": "Browser can execute only JavaScript",
+      "important": true
+    },
+    {
+      "id": "3",
+      "content": "GET and POST are important",
+      "important": false
+    },
+    {
+      "content": "alfred",
+      "important": true,
+      "id": "4"
+    },
+    {
+      "content": "mine",
+      "important": true,
+      "id": "5"
+    },
+    {
+      "content": "kevin",
+      "important": true,
+      "id": "6"
+    },
+    {
+      "content": "POST is used to create new resources",
+      "important": false,
+      "id": "7"
+    },
+    {
+      "content": "I love you LORD",
+      "important": true,
+      "id": "XqcjezS63kI"
+    }
+  ]
+}
