@@ -5,17 +5,16 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-
+app.use(express.static('dist'))
 // ===== LOGGER =====
 app.use((req, res, next) => {
   console.log(req.method, req.path)
   next()
 })
 
-// ===== HEALTH CHECK =====
-app.get('/', (req, res) => {
-  res.send('<h1>Notes API</h1><p>Try <a href="/api/notes">/api/notes</a></p>')
-})
+
+
+
 
 // ===== IN-MEMORY DATA =====
 let notes = [
@@ -29,6 +28,11 @@ app.get('/api/notes', (req, res) => {
   console.log('GET /api/notes called')
   res.json(notes)
 })
+// ===== HEALTH CHECK =====
+app.get('/', (req, res) => {
+  res.send('<h1>Notes API</h1><p>Try <a href="/api/notes">/api/notes</a></p>')
+})
+
 
 app.get('/api/notes/:id', (req, res) => {
   const note = notes.find(n => n.id === req.params.id)
