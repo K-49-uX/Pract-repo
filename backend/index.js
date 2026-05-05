@@ -30,7 +30,7 @@ app.get('/api/notes', (req, res) => {
 })
 // ===== HEALTH CHECK =====
 app.get('/', (req, res) => {
-  res.send('<h1>Notes API</h1><p>Try <a href="/api/notes">/api/notes</a></p>')
+  res.json(notes)
 })
 
 
