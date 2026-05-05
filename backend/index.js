@@ -1,15 +1,20 @@
 const express = require('express')
-const path = require('path')
+const cors = require('cors')
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
-app.use(express.static('dist'))
 
 // ===== LOGGER =====
 app.use((req, res, next) => {
   console.log(req.method, req.path)
   next()
+})
+
+// ===== HEALTH CHECK =====
+app.get('/', (req, res) => {
+  res.send('<h1>Notes API</h1><p>Try <a href="/api/notes">/api/notes</a></p>')
 })
 
 // ===== IN-MEMORY DATA =====
@@ -62,12 +67,9 @@ app.delete('/api/notes/:id', (req, res) => {
   res.status(204).end()
 })
 
-// ===== SERVE FRONTEND =====
-app.use(express.static(path.join(__dirname, 'dist')))
-
-// fallback (React routing safe version)
+// ===== UNKNOWN ENDPOINT =====
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  res.status(404).json({ error: 'unknown endpoint' })
 })
 
 // ===== START SERVER =====

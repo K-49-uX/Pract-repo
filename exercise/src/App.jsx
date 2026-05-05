@@ -9,24 +9,44 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    noteService.getAll().then((initialNotes) => {
-      setNotes(initialNotes)
-    })
+    noteService
+      .getAll()
+      .then((initialNotes) => {
+        setNotes(initialNotes)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Failed to load notes:', error)
+        setErrorMessage(
+          'Could not load notes from the server. Please try again later.'
+        )
+        setLoading(false)
+        setTimeout(() => setErrorMessage(null), 8000)
+      })
   }, [])
 
   const addNote = (event) => {
     event.preventDefault()
+    if (!newNote.trim()) return
     const noteObject = {
       content: newNote,
       important: Math.random() > 0.5,
     }
 
-    noteService.create(noteObject).then((returnedNote) => {
-      setNotes(notes.concat(returnedNote))
-      setNewNote('')
-    })
+    noteService
+      .create(noteObject)
+      .then((returnedNote) => {
+        setNotes(notes.concat(returnedNote))
+        setNewNote('')
+      })
+      .catch((error) => {
+        console.error('Failed to create note:', error)
+        setErrorMessage('Could not save note to the server.')
+        setTimeout(() => setErrorMessage(null), 5000)
+      })
   }
 
   const toggleImportanceOf = (id) => {
@@ -65,6 +85,10 @@ const App = () => {
         </button>
       </div>
       <ul>
+        {loading && <li>Loading notes…</li>}
+        {!loading && notesToShow.length === 0 && (
+          <li>No notes to display.</li>
+        )}
         {notesToShow.map((note) => (
           <Note
             key={note.id}
